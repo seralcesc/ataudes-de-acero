@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bht5unftmfy6u"]
+
+[ext_resource type="Script" uid="uid://cjormyhmhhws0" path="res://personaje/player_tank.gd" id="1_of82t"]
+[ext_resource type="PackedScene" uid="uid://brwfbyt5ry1l3" path="res://personaje/bullet.tscn" id="2_h50u8"]
+[ext_resource type="Texture2D" uid="uid://bkiootod3wshh" path="res://tankBody_green_outline.png" id="2_of82t"]
+[ext_resource type="Texture2D" uid="uid://pwt1bvsvpyra" path="res://tankGreen_barrel2_outline.png" id="3_0872g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_of82t"]
+size = Vector2(87.44082, 80.27729)
+
+[node name="PlayerTank" type="CharacterBody2D" unique_id=601127734]
+script = ExtResource("1_of82t")
+bullet_scene = ExtResource("2_h50u8")
+
+[node name="Sprite2D_Barcaza" type="Sprite2D" parent="." unique_id=296334096]
+rotation = 3.1415927
+texture = ExtResource("2_of82t")
+
+[node name="Turret" type="Sprite2D" parent="." unique_id=93375105]
+position = Vector2(0, -12)
+scale = Vector2(1.216, 1.485)
+texture = ExtResource("3_0872g")
+
+[node name="Muzzle" type="Marker2D" parent="Turret" unique_id=203090136]
+position = Vector2(0, -30.976429)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318098511]
+position = Vector2(7.1525574e-07, 4.7683716e-07)
+scale = Vector2(0.9377772, 0.92180496)
+shape = SubResource("RectangleShape2D_of82t")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1091746052]

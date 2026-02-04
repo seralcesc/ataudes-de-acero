@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://c3fwa0y3qw2o4"]
+
+[ext_resource type="Texture2D" uid="uid://ceupwjj260jwp" path="res://tileSand2.png" id="1_om84d"]
+[ext_resource type="Texture2D" uid="uid://cs6xv7fy02tvo" path="res://tileSand_roadSplitE.png" id="2_h1xlt"]
+[ext_resource type="Texture2D" uid="uid://dpunb4l0rcqtk" path="res://tileSand_roadEast.png" id="3_8mpwi"]
+[ext_resource type="Texture2D" uid="uid://bll144fhrv38o" path="res://tileSand_roadSplitS.png" id="4_xfkvf"]
+[ext_resource type="Texture2D" uid="uid://c7it2i2bvya68" path="res://tileSand_roadCornerUL.png" id="5_h4efd"]
+[ext_resource type="Texture2D" uid="uid://4wyf8te408jk" path="res://tileGrass_roadTransitionE_dirt.png" id="6_4jky4"]
+[ext_resource type="Texture2D" uid="uid://dn3iu6yaalxmt" path="res://tileGrass_transitionW.png" id="7_lp2xq"]
+[ext_resource type="Texture2D" uid="uid://c0g0yjmhl6j8n" path="res://tileSand_roadNorth.png" id="8_ceg0l"]
+[ext_resource type="Texture2D" uid="uid://c1s31a2rta3y8" path="res://tileSand_roadCrossing.png" id="9_3xmnw"]
+[ext_resource type="Texture2D" uid="uid://dn828f7w3snfc" path="res://tileSand_roadCornerLR.png" id="10_i44l1"]
+[ext_resource type="Texture2D" uid="uid://dvodf3m5pfdhb" path="res://tileGrass_transitionE.png" id="11_d8un4"]
+[ext_resource type="Texture2D" uid="uid://cw5yt8l2gdknn" path="res://oilSpill_large.png" id="12_ijj4g"]
+[ext_resource type="PackedScene" uid="uid://sucro7mhosaq" path="res://escenario/obstaculo_bidon_gris.tscn" id="13_jx28q"]
+[ext_resource type="PackedScene" uid="uid://igrppdh2qq7w" path="res://escenario/obstaculo_bidon_gris2.tscn" id="14_4eh8u"]
+[ext_resource type="PackedScene" uid="uid://uer8yq7cw5vh" path="res://escenario/barricada_metal.tscn" id="15_to4c6"]
+[ext_resource type="PackedScene" uid="uid://bht5unftmfy6u" path="res://personaje/player_tank.tscn" id="16_gxi2h"]
+
+[node name="Mapa1" type="Node2D" unique_id=683616142]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1322166068]
+texture_repeat = 2
+texture = ExtResource("1_om84d")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 2000)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=396096764]
+texture = ExtResource("2_h1xlt")
+
+[node name="TileSandRoadEast" type="Sprite2D" parent="." unique_id=2099667652]
+position = Vector2(128, 0)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadSplitS" type="Sprite2D" parent="." unique_id=1572168281]
+position = Vector2(256, 0)
+texture = ExtResource("4_xfkvf")
+
+[node name="TileSandRoadCornerUl" type="Sprite2D" parent="." unique_id=996529738]
+position = Vector2(384, 0)
+texture = ExtResource("5_h4efd")
+
+[node name="TileSandRoadCornerUl2" type="Sprite2D" parent="." unique_id=1780741259]
+position = Vector2(0, 128)
+texture = ExtResource("5_h4efd")
+
+[node name="TileGrassRoadTransitionEDirt" type="Sprite2D" parent="." unique_id=114180670]
+position = Vector2(-128, 128)
+texture = ExtResource("6_4jky4")
+
+[node name="TileGrassTransitionW" type="Sprite2D" parent="." unique_id=1253143711]
+position = Vector2(-127, 0)
+rotation = 3.1415927
+texture = ExtResource("7_lp2xq")
+
+[node name="TileSandRoadNorth" type="Sprite2D" parent="." unique_id=1397802919]
+position = Vector2(384, -128)
+scale = Vector2(1, 0.99785703)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth2" type="Sprite2D" parent="." unique_id=1823176391]
+position = Vector2(384, -256)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadCrossing" type="Sprite2D" parent="." unique_id=6732214]
+position = Vector2(384, -384)
+texture = ExtResource("9_3xmnw")
+
+[node name="TileSandRoadNorth3" type="Sprite2D" parent="." unique_id=1885085451]
+position = Vector2(0, -128)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth4" type="Sprite2D" parent="." unique_id=52730789]
+position = Vector2(0, -255)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadCornerLr" type="Sprite2D" parent="." unique_id=1221491205]
+position = Vector2(0, -383)
+texture = ExtResource("10_i44l1")
+
+[node name="TileSandRoadEast2" type="Sprite2D" parent="." unique_id=531955518]
+position = Vector2(125, -383)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadEast3" type="Sprite2D" parent="." unique_id=1789514151]
+position = Vector2(254, -383)
+scale = Vector2(1.0799952, 1)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadNorth5" type="Sprite2D" parent="." unique_id=1966530263]
+position = Vector2(256, 128)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth6" type="Sprite2D" parent="." unique_id=1687958523]
+position = Vector2(256, 256)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth7" type="Sprite2D" parent="." unique_id=1564190415]
+position = Vector2(256, 384)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth8" type="Sprite2D" parent="." unique_id=1521672548]
+position = Vector2(255, 512)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadEast4" type="Sprite2D" parent="." unique_id=1275217952]
+position = Vector2(512, -384)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadEast5" type="Sprite2D" parent="." unique_id=375855780]
+position = Vector2(639, -384)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadEast6" type="Sprite2D" parent="." unique_id=504315855]
+position = Vector2(767, -384)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadEast7" type="Sprite2D" parent="." unique_id=2032061635]
+position = Vector2(895, -384)
+texture = ExtResource("3_8mpwi")
+
+[node name="TileSandRoadNorth9" type="Sprite2D" parent="." unique_id=1405028354]
+position = Vector2(384, -511)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth10" type="Sprite2D" parent="." unique_id=2106209157]
+position = Vector2(384, -639)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth11" type="Sprite2D" parent="." unique_id=1410735668]
+position = Vector2(384, -767)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth12" type="Sprite2D" parent="." unique_id=1804314993]
+position = Vector2(384, -895)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileGrassTransitionE" type="Sprite2D" parent="." unique_id=625543959]
+position = Vector2(-127, -128)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE2" type="Sprite2D" parent="." unique_id=1805268158]
+position = Vector2(-127, -256)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE3" type="Sprite2D" parent="." unique_id=1514860873]
+position = Vector2(-127, -384)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE4" type="Sprite2D" parent="." unique_id=226738235]
+position = Vector2(-127, -511)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE5" type="Sprite2D" parent="." unique_id=769234248]
+position = Vector2(-127, -639)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE6" type="Sprite2D" parent="." unique_id=312562316]
+position = Vector2(-127, -767)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE7" type="Sprite2D" parent="." unique_id=783613333]
+position = Vector2(-127, -895)
+scale = Vector2(0.99444246, 1)
+texture = ExtResource("11_d8un4")
+
+[node name="TileSandRoadNorth13" type="Sprite2D" parent="." unique_id=2052033327]
+position = Vector2(255, 639)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth14" type="Sprite2D" parent="." unique_id=716040840]
+position = Vector2(255, 767)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileSandRoadNorth15" type="Sprite2D" parent="." unique_id=1128051605]
+position = Vector2(255, 893)
+texture = ExtResource("8_ceg0l")
+
+[node name="TileGrassTransitionE8" type="Sprite2D" parent="." unique_id=1422625899]
+position = Vector2(-128, 256)
+scale = Vector2(1.0032082, 1)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE9" type="Sprite2D" parent="." unique_id=982335073]
+position = Vector2(-128, 383)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE10" type="Sprite2D" parent="." unique_id=2028611193]
+position = Vector2(-128, 511)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE11" type="Sprite2D" parent="." unique_id=828460095]
+position = Vector2(-128, 638)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE12" type="Sprite2D" parent="." unique_id=588805580]
+position = Vector2(-128, 766)
+texture = ExtResource("11_d8un4")
+
+[node name="TileGrassTransitionE13" type="Sprite2D" parent="." unique_id=1710102191]
+position = Vector2(-128, 894)
+texture = ExtResource("11_d8un4")
+
+[node name="OilSpillLarge2" type="Sprite2D" parent="." unique_id=760567980]
+position = Vector2(749, -280)
+texture = ExtResource("12_ijj4g")
+
+[node name="OilSpillLarge3" type="Sprite2D" parent="." unique_id=1244636878]
+position = Vector2(263, -312)
+texture = ExtResource("12_ijj4g")
+
+[node name="StaticBody2D" parent="." unique_id=515764763 instance=ExtResource("13_jx28q")]
+position = Vector2(316, -313)
+
+[node name="StaticBody2D2" parent="." unique_id=1200548402 instance=ExtResource("13_jx28q")]
+position = Vector2(314, -265)
+
+[node name="StaticBody2D3" parent="." unique_id=347655931 instance=ExtResource("13_jx28q")]
+position = Vector2(273, -291)
+
+[node name="StaticBody2D4" parent="." unique_id=1377087900 instance=ExtResource("14_4eh8u")]
+position = Vector2(683, -286)
+
+[node name="StaticBody2D5" parent="." unique_id=1864602147 instance=ExtResource("13_jx28q")]
+position = Vector2(728, -263)
+
+[node name="StaticBody2D6" parent="." unique_id=707926814 instance=ExtResource("14_4eh8u")]
+position = Vector2(728, -318)
+rotation = -0.93898714
+
+[node name="StaticBody2D7" parent="." unique_id=994943396 instance=ExtResource("13_jx28q")]
+position = Vector2(378, 100)
+
+[node name="StaticBody2D8" parent="." unique_id=459650731 instance=ExtResource("13_jx28q")]
+position = Vector2(818, 317)
+
+[node name="StaticBody2D9" parent="." unique_id=796047672 instance=ExtResource("13_jx28q")]
+position = Vector2(569, 471)
+
+[node name="StaticBody2D10" parent="." unique_id=725257357 instance=ExtResource("14_4eh8u")]
+position = Vector2(638, 169)
+rotation = 1.7610372
+
+[node name="OilSpillLarge" type="Sprite2D" parent="." unique_id=372023053]
+position = Vector2(479, 295)
+texture = ExtResource("12_ijj4g")
+
+[node name="StaticBody2D11" parent="." unique_id=1311796317 instance=ExtResource("15_to4c6")]
+position = Vector2(-34, -806)
+
+[node name="StaticBody2D12" parent="." unique_id=1503669834 instance=ExtResource("15_to4c6")]
+position = Vector2(26, -806)
+
+[node name="StaticBody2D13" parent="." unique_id=2147436830 instance=ExtResource("15_to4c6")]
+position = Vector2(88, -807)
+
+[node name="StaticBody2D14" parent="." unique_id=1604563887 instance=ExtResource("15_to4c6")]
+position = Vector2(147, -806)
+
+[node name="barricada_metal" parent="." unique_id=162148566 instance=ExtResource("15_to4c6")]
+position = Vector2(905, 881)
+
+[node name="barricada_metal2" parent="." unique_id=1473158905 instance=ExtResource("15_to4c6")]
+position = Vector2(846, 882)
+
+[node name="barricada_metal3" parent="." unique_id=1976564912 instance=ExtResource("15_to4c6")]
+position = Vector2(786, 882)
+
+[node name="barricada_metal4" parent="." unique_id=1135910731 instance=ExtResource("15_to4c6")]
+position = Vector2(725, 882)
+
+[node name="PlayerTank" parent="." unique_id=601127734 instance=ExtResource("16_gxi2h")]

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://chxrixm25kuun"]
+
+[ext_resource type="PackedScene" uid="uid://dm3tqiykgaiv0" path="res://escenario/floor_grassRoad7.tscn" id="1_a2b5e"]
+[ext_resource type="PackedScene" uid="uid://bgb7s6e50bdxv" path="res://escenario/floor_grassRoadI.tscn" id="2_2ni53"]
+[ext_resource type="PackedScene" uid="uid://ddvirubgoo1tb" path="res://escenario/floor_grassRoadL.tscn" id="3_7f472"]
+[ext_resource type="PackedScene" uid="uid://cg30tpy13r2rp" path="res://escenario/floor_sand&grassRoad-.tscn" id="4_y2cif"]
+[ext_resource type="PackedScene" uid="uid://bptshqvebuiac" path="res://escenario/floor_sandRoadT.tscn" id="5_qlquu"]
+[ext_resource type="PackedScene" uid="uid://csuy6ko4sngsl" path="res://escenario/floor_sand1.tscn" id="6_i3j83"]
+[ext_resource type="PackedScene" uid="uid://cph1u6li3r8uy" path="res://escenario/floor_sand2.tscn" id="7_dpklr"]
+[ext_resource type="PackedScene" uid="uid://c2371blgco0a8" path="res://escenario/floor_sandRoad_I.tscn" id="8_ufntn"]
+[ext_resource type="PackedScene" uid="uid://dk2snlx1r4ecv" path="res://escenario/floor_sandRoadC.tscn" id="9_vt8xj"]
+[ext_resource type="PackedScene" uid="uid://bicnibuw1afqm" path="res://escenario/floor_sand3.tscn" id="10_16fur"]
+[ext_resource type="PackedScene" uid="uid://dtg2ro8jvrnrs" path="res://escenario/floor_sand&grass1.tscn" id="11_tqwwe"]
+
+[node name="Mapa_1" type="Node2D" unique_id=489406483]
+
+[node name="StaticBody2D" parent="." unique_id=1324768659 instance=ExtResource("1_a2b5e")]
+position = Vector2(64, 64)
+
+[node name="StaticBody2D2" parent="." unique_id=765872430 instance=ExtResource("2_2ni53")]
+position = Vector2(64, 192)
+
+[node name="StaticBody2D3" parent="." unique_id=1157758596 instance=ExtResource("3_7f472")]
+position = Vector2(64, 320)
+
+[node name="StaticBody2D4" parent="." unique_id=299864268 instance=ExtResource("4_y2cif")]
+position = Vector2(192, 320)
+
+[node name="StaticBody2D5" parent="." unique_id=174344041 instance=ExtResource("5_qlquu")]
+position = Vector2(322, 322)
+
+[node name="StaticBody2D6" parent="." unique_id=1235810401 instance=ExtResource("6_i3j83")]
+position = Vector2(320, 192)
+
+[node name="StaticBody2D7" parent="." unique_id=1359315182 instance=ExtResource("7_dpklr")]
+position = Vector2(320, 64)
+
+[node name="StaticBody2D8" parent="." unique_id=2001640298 instance=ExtResource("8_ufntn")]
+position = Vector2(450, 322)
+
+[node name="StaticBody2D9" parent="." unique_id=836523419 instance=ExtResource("9_vt8xj")]
+position = Vector2(450, 194)
+
+[node name="StaticBody2D10" parent="." unique_id=1595202905 instance=ExtResource("10_16fur")]
+position = Vector2(448, 64)
+
+[node name="StaticBody2D11" parent="." unique_id=2047147054 instance=ExtResource("11_tqwwe")]
+position = Vector2(192, 192)
+
+[node name="StaticBody2D12" parent="." unique_id=803747487 instance=ExtResource("11_tqwwe")]
+position = Vector2(192, 64)

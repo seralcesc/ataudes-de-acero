@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://sucro7mhosaq"]
+
+[ext_resource type="Texture2D" uid="uid://c746ybd33xamn" path="res://barrelRust_top.png" id="1_ph28s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ph28s"]
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=515764763]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=117251614]
+texture = ExtResource("1_ph28s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=45597909]
+scale = Vector2(2.404787, 2.3877492)
+shape = SubResource("CircleShape2D_ph28s")

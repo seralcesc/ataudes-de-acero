@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://uer8yq7cw5vh"]
+
+[ext_resource type="Texture2D" uid="uid://dr83pjq51n2ef" path="res://barricadeMetal.png" id="1_1220x"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_sm7vf"]
+a = Vector2(0.03251648, -1.2360806)
+b = Vector2(0.02213931, 1.221462)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6lw3t"]
+a = Vector2(-5.1333117, -4.402113)
+b = Vector2(4.9279795, 4.585534)
+
+[node name="barricada_metal" type="StaticBody2D" unique_id=1311796317]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470773929]
+texture = ExtResource("1_1220x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1159042886]
+rotation = 0.7679449
+scale = Vector2(-5.735797, -27.214352)
+shape = SubResource("SegmentShape2D_sm7vf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1706666525]
+scale = Vector2(4.87015, 5.451927)
+shape = SubResource("SegmentShape2D_6lw3t")

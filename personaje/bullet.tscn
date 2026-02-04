@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://brwfbyt5ry1l3"]
+
+[ext_resource type="Script" uid="uid://db4wr4gf88670" path="res://personaje/bullet.gd" id="1_2uhu2"]
+[ext_resource type="Texture2D" uid="uid://bx7hqenyktnjg" path="res://bulletDark1.png" id="1_p0obx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2uhu2"]
+radius = 2.228704
+height = 14.254816
+
+[node name="Area2D" type="Area2D" unique_id=1118719868]
+script = ExtResource("1_2uhu2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1108918757]
+texture = ExtResource("1_p0obx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1380200607]
+scale = Vector2(1.7576462, 1.4655483)
+shape = SubResource("CapsuleShape2D_2uhu2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

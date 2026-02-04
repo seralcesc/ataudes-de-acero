@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://igrppdh2qq7w"]
+
+[ext_resource type="Texture2D" uid="uid://dljsnhxkpi05y" path="res://barrelRust_side.png" id="1_r67pi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gd8le"]
+size = Vector2(30.972004, 36.320045)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1377087900]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=578127910]
+texture = ExtResource("1_r67pi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=540976667]
+position = Vector2(0, 9.536743e-07)
+scale = Vector2(1.2914889, 1.5418484)
+shape = SubResource("RectangleShape2D_gd8le")

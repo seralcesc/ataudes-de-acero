@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cg30tpy13r2rp"]
+
+[ext_resource type="Texture2D" uid="uid://4wyf8te408jk" path="res://tileGrass_roadTransitionE_dirt.png" id="1_3ynmy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsvjo"]
+size = Vector2(128, 128)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1324768659]
+
+[node name="TileGrassTransitionW" type="Sprite2D" parent="." unique_id=1328038057]
+texture = ExtResource("1_3ynmy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1429343355]
+shape = SubResource("RectangleShape2D_tsvjo")

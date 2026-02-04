@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cph1u6li3r8uy"]
+
+[ext_resource type="Texture2D" uid="uid://ceupwjj260jwp" path="res://tileSand2.png" id="1_ysxg2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykf3s"]
+size = Vector2(128, 128)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1359315182]
+
+[node name="TileSand2" type="Sprite2D" parent="." unique_id=310789260]
+texture = ExtResource("1_ysxg2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1457291270]
+shape = SubResource("RectangleShape2D_ykf3s")

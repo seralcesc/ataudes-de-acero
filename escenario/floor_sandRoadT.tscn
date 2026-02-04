@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bptshqvebuiac"]
+
+[ext_resource type="Texture2D" uid="uid://bll144fhrv38o" path="res://tileSand_roadSplitS.png" id="1_gdb6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0swtn"]
+size = Vector2(128, 128)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=174344041]
+
+[node name="TileGrassTransitionW" type="Sprite2D" parent="." unique_id=52456334]
+position = Vector2(-2, -2)
+texture = ExtResource("1_gdb6u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1339600919]
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_0swtn")
