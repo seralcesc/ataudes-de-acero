@@ -180,7 +180,3 @@ func recibir_daño():
 	if ui:
 		ui.mostrar_efecto_daño() # Llama al parpadeo rojo
 		ui.actualizar_salud(health) # Actualiza el contador de vidas
-	
-	# Si nos quedamos sin vida, reinicia
-	if health <= 0:
-		get_tree().reload_current_scene()

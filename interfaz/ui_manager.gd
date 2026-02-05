@@ -8,6 +8,11 @@ extends CanvasLayer
 @onready var damage_overlay = $Control/DamageOverlay
 @onready var minimap_player_icon = $Control/Minimap/PlayerIcon
 
+# --- ELEMENTOS PARA LA CUENTA ATRÁS ---
+@onready var start_overlay = $StartOverlay # El contenedor de la pantalla de inicio
+@onready var start_label = $StartOverlay/StartLabel # El texto de 3, 2, 1...
+@onready var game_over_overlay = $GameOverOverlay
+
 # --- CONFIGURACIÓN DEL MINIMAPA ---
 # Dimensiones totales del mapa
 @export var map_total_width: float = 1246.0 
@@ -15,56 +20,108 @@ extends CanvasLayer
 # Carga el tamaño dado al cuadro del minimapa en el editor de Godot
 @onready var minimap_visual_size = $Control/Minimap.size
 
-# --- VARIABLES PARA EL EFECTO CRÍTICO ---
+# --- VARIABLES DE ESTADO ---
 var salud_actual: int = 3
 var tween_critico: Tween # Guarda la animación para poder pararla si recuperamos vida
+var cuenta_atras: int = 3
+var esta_muerto: bool = false
 
 func _ready():
 	# Accede al grupo 'ui' para que el tanque nos encuentre al empezar el juego
 	add_to_group("ui")
 	
+	# 1. Configuración inicial de barras
+	_setup_ui_initial_state()
+	
+	# 2. Prepara pantalla de Inicio (Overlay Negro)
 	# El efecto rojo de daño empieza siendo invisible (Transparencia Alfa a 0)
-	if damage_overlay:
-		# fuerza que ocupe toda la pantalla
-		damage_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		
-		# Ajuste manual por si los anclajes fallan por el nodo padre
-		var screen_size = get_viewport().get_visible_rect().size
-		damage_overlay.size = screen_size
-		damage_overlay.position = Vector2.ZERO
-		
-		# las acciones de disparo no se ven afectadas por el indicardor de daño recibido
-		# evita el bloqueo de los clics del ratón
-		damage_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		# damos visibilidad (la opacidad es 0, pero el nodo debe estar 'show')
-		damage_overlay.modulate.a = 0
-		damage_overlay.show()
-	else:
-		print("ERROR: No se encuentra el nodo DamageOverlay. Revisa el HUD.")
+	if start_overlay:
+		# fondo negro visible durante el conteo
+		start_overlay.show()
+		# color de fondo sea negro opaco al inicio
+		start_overlay.modulate.a = 1.0 
+		# Iniciamos la secuencia
+		iniciar_secuencia_entrada()
+	
+	# oculta la pantalla de Game Over al principio
+	if game_over_overlay:
+		game_over_overlay.hide()
+		game_over_overlay.modulate.a = 0.0
 
-	# Configuración inicial de las ProgressBars
-	# barra de munición
+	actualizar_salud(3)
+
+func _input(event):
+	# activa estas teclas si el jugador ha muerto
+	if esta_muerto:
+		if event is InputEventKey and event.pressed:
+			if event.keycode == KEY_Y:
+				get_tree().reload_current_scene()
+			elif event.keycode == KEY_N:
+				get_tree().quit()
+	
+func _process(_delta):
+	actualizar_minimapa()
+
+func _setup_ui_initial_state():
+	# Configuramos la barra de balas
 	if ammo_bar:
 		ammo_bar.max_value = 10 
 		ammo_bar.value = 10
-		if ammo_bar is ProgressBar:
-			ammo_bar.show_percentage = false
-	
-	# barra de sobrecalentamiento
+		if ammo_bar is ProgressBar: ammo_bar.show_percentage = false
 	if heat_bar:
 		heat_bar.max_value = 100
 		heat_bar.value = 0
-		if heat_bar is ProgressBar:
-			heat_bar.show_percentage = false
+		if heat_bar is ProgressBar: heat_bar.show_percentage = false
 
-	# Establece el texto de salud inicial al arrancar el juego en las vidas establecidas (3)
-	actualizar_salud(3)
+# --- LÓGICA DE INICIo Y  FIN---
+
+func iniciar_secuencia_entrada():
+	# Bloquea el movimiento del tanque
+	get_tree().call_group("jugador", "set_physics_process", false)
+	if start_label:
+		start_label.text = "READY?"
+	await get_tree().create_timer(1.2).timeout
+	gestionar_conteo()
+
+func gestionar_conteo():
+	if cuenta_atras > 0:
+		start_label.text = str(cuenta_atras)
+		
+		# Efecto visual de pulso
+		var tween = create_tween()
+		start_label.pivot_offset = start_label.size / 2 
+		start_label.scale = Vector2(2.5, 2.5) 
+		tween.tween_property(start_label, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
+		cuenta_atras -= 1
+		await get_tree().create_timer(1.0).timeout
+		gestionar_conteo()
+	else:
+		finalizar_entrada()
+
+func finalizar_entrada():
+	if start_label:
+		start_label.text = "GO!"
+	await get_tree().create_timer(0.6).timeout
+	var tween_fade = create_tween()
+	tween_fade.tween_property(start_overlay, "modulate:a", 0.0, 0.5)
+	get_tree().call_group("jugador", "set_physics_process", true)
+	await tween_fade.finished
+	if start_overlay: start_overlay.hide()
+
+func mostrar_game_over():
+	if esta_muerto: return # Evita ejecutar esto varias veces
+	esta_muerto = true
 	
-func _process(_delta):
-	# Actualiza la posición del icono en el minimapa en cada frame
-	actualizar_minimapa()
+	if game_over_overlay:
+		game_over_overlay.show()
+		var tween = create_tween()
+		# Animación de aparición gradual
+		tween.tween_property(game_over_overlay, "modulate:a", 1.0, 1.0)
+		# Detiene el tiempo del juego/jugador
+		get_tree().call_group("jugador", "set_physics_process", false)
 
-# --- MÉTODOS DE ACTUALIZACIÓN (Llamados desde player_tank.gd) ---
+# --- MÉTODOS DE INTERFAZ (Llamados desde player_tank.gd) ---
 
 # Cambia el texto de salud
 func actualizar_salud(puntos: int):
@@ -77,7 +134,10 @@ func actualizar_salud(puntos: int):
 		health_label.text = "ESTADO: " + corazones
 	
 	# en caso de quedar con una vida, parpadeo rojo del borde
-	if salud_actual == 1:
+	if salud_actual <= 0:
+		detener_parpadeo_critico()
+		mostrar_game_over() # llama a la funcion gameover que activa el panel de reintentar
+	elif salud_actual == 1:
 		iniciar_parpadeo_critico()
 	else:
 		detener_parpadeo_critico()
@@ -95,27 +155,20 @@ func actualizar_calor(valor: float, esta_bloqueado: bool):
 	if heat_bar:
 		heat_bar.value = valor
 		# Lógica de cambio de color para ProgressBar (StyleBoxFlat)
-		if heat_bar is ProgressBar:
-			# Buscamos el estilo de la parte rellena de la barra
-			var style = heat_bar.get_theme_stylebox("fill")
-			
-			# Verifica que el estilo exista para evitar errores de ejecución
-			if style:
-				# Duplica el estilo para que el cambio de color solo afecte a ESTA barra
-				var style_box = style.duplicate()
-				
-				if esta_bloqueado:
-					style_box.bg_color = Color.RED # Rojo brillante si el arma se bloquea
-				else:
-					# Cambia gradualmente de azul (frío) a naranja (caliente) según el valor
-					style_box.bg_color = Color.SKY_BLUE.lerp(Color.ORANGE, valor / 100.0)
-				
-				# Aplica el estilo modificado a la barra
-				heat_bar.add_theme_stylebox_override("fill", style_box)
+		var style = heat_bar.get_theme_stylebox("fill")
+		# Verifica que el estilo exista para evitar errores de ejecución
+		if style:
+			# Duplica el estilo para que el cambio de color solo afecte a ESTA barra
+			var style_box = style.duplicate()
+			# establece coloress para la barra de sobrecalentamiento
+			style_box.bg_color = Color.RED if esta_bloqueado else Color.SKY_BLUE.lerp(Color.ORANGE, valor / 100.0) 
+			# Aplica el estilo modificado a la barra
+			heat_bar.add_theme_stylebox_override("fill", style_box)
 
 # Crea el efecto de parpadeo rojo cuando recibimos un impacto
 func mostrar_efecto_daño():
-	if salud_actual <= 1: return #asegura que de quedar una vida no se ejecute lo de abajo (estado_critico)
+	# asegura que de quedar una vida no se ejecute lo de abajo (estado_critico)
+	if salud_actual <= 1: return 
 	if damage_overlay:
 		# 'Tween': animación por código fluida
 		var tween = create_tween()

@@ -11,13 +11,46 @@ bg_color = Color(0.10333311, 0.55022943, 0.8576336, 1)
 [node name="HUD" type="CanvasLayer" unique_id=1216972590]
 script = ExtResource("1_xt8yb")
 
+[node name="StartOverlay" type="Control" parent="." unique_id=1213437316]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="StartOverlay" unique_id=1574649961]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.06666667, 0.06666667, 1)
+
+[node name="StartLabel" type="Label" parent="StartOverlay" unique_id=764491509]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -215.5
+offset_top = -82.5
+offset_right = 215.5
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 120
+text = "3, 2, 1..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Control" type="Control" parent="." unique_id=2091334467]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1152.0
-offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -36,10 +69,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 524.0
-offset_top = 7.0
-offset_right = 630.5
-offset_bottom = 21.0
+offset_left = -88.0
+offset_top = 32.0
+offset_right = 62.0
+offset_bottom = 84.0
 grow_horizontal = 2
 theme_override_constants/separation = 5
 
@@ -84,3 +117,52 @@ offset_bottom = 32.0
 [node name="HealthLabel" type="Label" parent="Control/StatusContainer" unique_id=1462290647]
 layout_mode = 2
 text = "SALUD: 3"
+
+[node name="StartTimer" type="Timer" parent="." unique_id=538656254]
+one_shot = true
+
+[node name="GameOverOverlay" type="ColorRect" parent="." unique_id=806030025]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.06666667, 0.06666667, 1)
+
+[node name="GameOverLabel" type="Label" parent="GameOverOverlay" unique_id=503738280]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -172.0
+offset_right = 172.0
+offset_bottom = 333.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.66972977, 0.016402623, 2.4065375e-07, 1)
+theme_override_font_sizes/font_size = 120
+text = "
+GAME  OVER"
+horizontal_alignment = 1
+
+[node name="RetryLabel" type="Label" parent="GameOverOverlay" unique_id=1476512291]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -125.5
+offset_right = 155.0
+offset_bottom = 125.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.62345827, 0, 0.0022306195, 1)
+theme_override_font_sizes/font_size = 90
+text = "
+
+RETRY?
+(Y/N)"
+horizontal_alignment = 1
+vertical_alignment = 1
