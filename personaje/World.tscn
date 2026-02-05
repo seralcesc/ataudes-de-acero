@@ -16,6 +16,19 @@
 [ext_resource type="PackedScene" uid="uid://igrppdh2qq7w" path="res://escenario/obstaculo_bidon_gris2.tscn" id="14_4eh8u"]
 [ext_resource type="PackedScene" uid="uid://uer8yq7cw5vh" path="res://escenario/barricada_metal.tscn" id="15_to4c6"]
 [ext_resource type="PackedScene" uid="uid://bht5unftmfy6u" path="res://personaje/player_tank.tscn" id="16_gxi2h"]
+[ext_resource type="PackedScene" uid="uid://inf2l6yqskr0" path="res://interfaz/hud.tscn" id="17_h1xlt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_om84d"]
+size = Vector2(1190, 43.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1xlt"]
+size = Vector2(1195, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8mpwi"]
+size = Vector2(55, 2005)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfkvf"]
+size = Vector2(51, 1999)
 
 [node name="Mapa1" type="Node2D" unique_id=683616142]
 
@@ -50,7 +63,7 @@ texture = ExtResource("6_4jky4")
 
 [node name="TileGrassTransitionW" type="Sprite2D" parent="." unique_id=1253143711]
 position = Vector2(-127, 0)
-rotation = 3.1415927
+rotation = -3.1415925
 texture = ExtResource("7_lp2xq")
 
 [node name="TileSandRoadNorth" type="Sprite2D" parent="." unique_id=1397802919]
@@ -209,64 +222,90 @@ texture = ExtResource("12_ijj4g")
 position = Vector2(263, -312)
 texture = ExtResource("12_ijj4g")
 
-[node name="StaticBody2D" parent="." unique_id=515764763 instance=ExtResource("13_jx28q")]
-position = Vector2(316, -313)
-
-[node name="StaticBody2D2" parent="." unique_id=1200548402 instance=ExtResource("13_jx28q")]
-position = Vector2(314, -265)
-
-[node name="StaticBody2D3" parent="." unique_id=347655931 instance=ExtResource("13_jx28q")]
-position = Vector2(273, -291)
-
-[node name="StaticBody2D4" parent="." unique_id=1377087900 instance=ExtResource("14_4eh8u")]
-position = Vector2(683, -286)
-
-[node name="StaticBody2D5" parent="." unique_id=1864602147 instance=ExtResource("13_jx28q")]
-position = Vector2(728, -263)
-
-[node name="StaticBody2D6" parent="." unique_id=707926814 instance=ExtResource("14_4eh8u")]
-position = Vector2(728, -318)
-rotation = -0.93898714
-
-[node name="StaticBody2D7" parent="." unique_id=994943396 instance=ExtResource("13_jx28q")]
-position = Vector2(378, 100)
-
-[node name="StaticBody2D8" parent="." unique_id=459650731 instance=ExtResource("13_jx28q")]
-position = Vector2(818, 317)
-
-[node name="StaticBody2D9" parent="." unique_id=796047672 instance=ExtResource("13_jx28q")]
-position = Vector2(569, 471)
-
-[node name="StaticBody2D10" parent="." unique_id=725257357 instance=ExtResource("14_4eh8u")]
-position = Vector2(638, 169)
-rotation = 1.7610372
-
 [node name="OilSpillLarge" type="Sprite2D" parent="." unique_id=372023053]
 position = Vector2(479, 295)
 texture = ExtResource("12_ijj4g")
 
-[node name="StaticBody2D11" parent="." unique_id=1311796317 instance=ExtResource("15_to4c6")]
+[node name="PlayerTank" parent="." unique_id=601127734 instance=ExtResource("16_gxi2h")]
+position = Vector2(510, 860)
+
+[node name="obstaculos" type="Node2D" parent="." unique_id=234459754]
+
+[node name="StaticBody2D11" parent="obstaculos" unique_id=1311796317 instance=ExtResource("15_to4c6")]
 position = Vector2(-34, -806)
 
-[node name="StaticBody2D12" parent="." unique_id=1503669834 instance=ExtResource("15_to4c6")]
+[node name="StaticBody2D12" parent="obstaculos" unique_id=1503669834 instance=ExtResource("15_to4c6")]
 position = Vector2(26, -806)
 
-[node name="StaticBody2D13" parent="." unique_id=2147436830 instance=ExtResource("15_to4c6")]
+[node name="StaticBody2D13" parent="obstaculos" unique_id=2147436830 instance=ExtResource("15_to4c6")]
 position = Vector2(88, -807)
 
-[node name="StaticBody2D14" parent="." unique_id=1604563887 instance=ExtResource("15_to4c6")]
+[node name="StaticBody2D14" parent="obstaculos" unique_id=1604563887 instance=ExtResource("15_to4c6")]
 position = Vector2(147, -806)
 
-[node name="barricada_metal" parent="." unique_id=162148566 instance=ExtResource("15_to4c6")]
-position = Vector2(905, 881)
+[node name="barricada_metal" parent="obstaculos" unique_id=162148566 instance=ExtResource("15_to4c6")]
+position = Vector2(843, 765)
 
-[node name="barricada_metal2" parent="." unique_id=1473158905 instance=ExtResource("15_to4c6")]
-position = Vector2(846, 882)
+[node name="barricada_metal2" parent="obstaculos" unique_id=1473158905 instance=ExtResource("15_to4c6")]
+position = Vector2(781, 765)
 
-[node name="barricada_metal3" parent="." unique_id=1976564912 instance=ExtResource("15_to4c6")]
-position = Vector2(786, 882)
+[node name="barricada_metal3" parent="obstaculos" unique_id=1976564912 instance=ExtResource("15_to4c6")]
+position = Vector2(724, 767)
 
-[node name="barricada_metal4" parent="." unique_id=1135910731 instance=ExtResource("15_to4c6")]
-position = Vector2(725, 882)
+[node name="barricada_metal4" parent="obstaculos" unique_id=1135910731 instance=ExtResource("15_to4c6")]
+position = Vector2(663, 767)
 
-[node name="PlayerTank" parent="." unique_id=601127734 instance=ExtResource("16_gxi2h")]
+[node name="StaticBody2D" parent="obstaculos" unique_id=515764763 instance=ExtResource("13_jx28q")]
+position = Vector2(316, -313)
+
+[node name="StaticBody2D2" parent="obstaculos" unique_id=1200548402 instance=ExtResource("13_jx28q")]
+position = Vector2(314, -265)
+
+[node name="StaticBody2D3" parent="obstaculos" unique_id=347655931 instance=ExtResource("13_jx28q")]
+position = Vector2(273, -291)
+
+[node name="StaticBody2D4" parent="obstaculos" unique_id=1377087900 instance=ExtResource("14_4eh8u")]
+position = Vector2(683, -286)
+
+[node name="StaticBody2D5" parent="obstaculos" unique_id=1864602147 instance=ExtResource("13_jx28q")]
+position = Vector2(728, -263)
+
+[node name="StaticBody2D6" parent="obstaculos" unique_id=707926814 instance=ExtResource("14_4eh8u")]
+position = Vector2(728, -318)
+rotation = -0.93898714
+
+[node name="StaticBody2D7" parent="obstaculos" unique_id=994943396 instance=ExtResource("13_jx28q")]
+position = Vector2(493, 33)
+
+[node name="StaticBody2D8" parent="obstaculos" unique_id=459650731 instance=ExtResource("13_jx28q")]
+position = Vector2(818, 317)
+
+[node name="StaticBody2D9" parent="obstaculos" unique_id=796047672 instance=ExtResource("13_jx28q")]
+position = Vector2(569, 471)
+
+[node name="StaticBody2D10" parent="obstaculos" unique_id=725257357 instance=ExtResource("14_4eh8u")]
+position = Vector2(73.99994, 393.00003)
+rotation = 1.7610372
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="adornos" type="Node2D" parent="." unique_id=1634150495]
+
+[node name="LimitesMapa" type="StaticBody2D" parent="." unique_id=991930734]
+
+[node name="Norte" type="CollisionShape2D" parent="LimitesMapa" unique_id=339451577]
+position = Vector2(404, -979.25)
+shape = SubResource("RectangleShape2D_om84d")
+
+[node name="Sur" type="CollisionShape2D" parent="LimitesMapa" unique_id=1680913971]
+position = Vector2(402.5, 978)
+shape = SubResource("RectangleShape2D_h1xlt")
+
+[node name="Este" type="CollisionShape2D" parent="LimitesMapa" unique_id=1581314078]
+position = Vector2(1027.5, 1.5)
+shape = SubResource("RectangleShape2D_8mpwi")
+
+[node name="Oeste" type="CollisionShape2D" parent="LimitesMapa" unique_id=1304939565]
+position = Vector2(-216, 0.5)
+shape = SubResource("RectangleShape2D_xfkvf")
+
+[node name="HUD" parent="." unique_id=1216972590 instance=ExtResource("17_h1xlt")]

@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://inf2l6yqskr0"]
+
+[ext_resource type="Script" uid="uid://d1dueoykuhgby" path="res://interfaz/ui_manager.gd" id="1_xt8yb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8o4r"]
+bg_color = Color(0.54571843, 0.5061734, 0.01017022, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xt8yb"]
+bg_color = Color(0.10333311, 0.55022943, 0.8576336, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=1216972590]
+script = ExtResource("1_xt8yb")
+
+[node name="Control" type="Control" parent="." unique_id=2091334467]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DamageOverlay" type="ColorRect" parent="Control" unique_id=1186805862]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.85490197, 0, 0.007843138, 1)
+
+[node name="AmmoContainer" type="VBoxContainer" parent="Control" unique_id=1038197448]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 524.0
+offset_top = 7.0
+offset_right = 630.5
+offset_bottom = 21.0
+grow_horizontal = 2
+theme_override_constants/separation = 5
+
+[node name="AmmoBar" type="ProgressBar" parent="Control/AmmoContainer" unique_id=761869328]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_a8o4r")
+max_value = 10.0
+step = 1.0
+show_percentage = false
+
+[node name="HeatBar" type="ProgressBar" parent="Control/AmmoContainer" unique_id=169210266]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_xt8yb")
+step = 0.1
+
+[node name="Minimap" type="Panel" parent="Control" unique_id=606166066]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 481.0
+offset_right = 165.0
+offset_bottom = 631.0
+grow_vertical = 0
+
+[node name="PlayerIcon" type="ColorRect" parent="Control/Minimap" unique_id=614932421]
+layout_mode = 0
+offset_right = 5.0
+offset_bottom = 5.0
+color = Color(1, 1, 0.03137255, 1)
+
+[node name="StatusContainer" type="VBoxContainer" parent="Control" unique_id=673316735]
+layout_mode = 1
+offset_right = 70.0
+offset_bottom = 23.0
+
+[node name="HealthLabel" type="Label" parent="Control/StatusContainer" unique_id=1462290647]
+layout_mode = 2
+text = "SALUD: 3"
