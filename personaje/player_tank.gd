@@ -142,17 +142,15 @@ func shoot():
 		# instancia del proyectil
 		var bullet = bullet_scene.instantiate()
 		# Obtenemos la posición global de la punta del cañón
-		var spawn_pos = muzzle.global_position
-		# se añade al nodo padre del tanque (el nivel) para que la bala no se mueva con el tanque
+		
 		get_parent().add_child(bullet)
+		bullet.global_position = muzzle.global_position
 		
-		# Posicionamiento de la bala en el origen del tanque
-		bullet.global_position = spawn_pos
+		# CONFIGURACIÓN CLAVE:
+		bullet.shooter_group = "balas_jugador" # <-- Marcamos que es nuestra
+		bullet.add_to_group("balas_jugador")
 		
-		# cálculo de la dirección de disparo basado en la orientación actual de la torreta
 		var fire_direction = Vector2.UP.rotated(turret.global_rotation)
-		
-		# Pasamos los datos necesarios al script de la bala (bullet.gd)
 		bullet.direction = fire_direction
 		bullet.rotation = turret.global_rotation
 		
@@ -173,10 +171,16 @@ func shoot():
 		print("ERROR: No has asignado la 'bullet_scene' en el Inspector del nodo player_tank")
 
 func recibir_daño():
-	# Reduce la salud
 	health -= 1
+	health = max(0, health)
 	
-	# Conecta con la UI para mostrar efectos visuales
 	if ui:
-		ui.mostrar_efecto_daño() # Llama al parpadeo rojo
-		ui.actualizar_salud(health) # Actualiza el contador de vidas
+		if ui.has_method("mostrar_efecto_daño"):
+			ui.mostrar_efecto_daño()
+		if ui.has_method("actualizar_salud"):
+			ui.actualizar_salud(health)
+	
+	if health <= 0:
+		# la UI lo gestiona el reinicio con Y/N
+		set_physics_process(false) # bloquea el tanque
+		print("JUGADOR: Derrotado. Espere...")

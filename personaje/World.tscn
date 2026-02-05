@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://uer8yq7cw5vh" path="res://escenario/barricada_metal.tscn" id="15_to4c6"]
 [ext_resource type="PackedScene" uid="uid://bht5unftmfy6u" path="res://personaje/player_tank.tscn" id="16_gxi2h"]
 [ext_resource type="PackedScene" uid="uid://inf2l6yqskr0" path="res://interfaz/hud.tscn" id="17_h1xlt"]
+[ext_resource type="PackedScene" uid="uid://f3ovxaflulda" path="res://personaje/turret_enemy.tscn" id="18_8mpwi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_om84d"]
 size = Vector2(1190, 43.5)
@@ -309,3 +310,12 @@ position = Vector2(-216, 0.5)
 shape = SubResource("RectangleShape2D_xfkvf")
 
 [node name="HUD" parent="." unique_id=1216972590 instance=ExtResource("17_h1xlt")]
+
+[node name="TurretEnemy" parent="." unique_id=101252854 instance=ExtResource("18_8mpwi")]
+position = Vector2(501, -139)
+
+[node name="TurretEnemy2" parent="." unique_id=1468092790 instance=ExtResource("18_8mpwi")]
+position = Vector2(664, 437)
+
+[node name="TurretEnemy3" parent="." unique_id=1737263296 instance=ExtResource("18_8mpwi")]
+position = Vector2(105, 545)

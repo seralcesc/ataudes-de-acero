@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_of82t"]
 size = Vector2(87.44082, 80.27729)
 
-[node name="PlayerTank" type="CharacterBody2D" unique_id=601127734]
+[node name="PlayerTank" type="CharacterBody2D" unique_id=601127734 groups=["jugador"]]
 script = ExtResource("1_of82t")
 bullet_scene = ExtResource("2_h50u8")
 
@@ -24,7 +24,7 @@ texture = ExtResource("3_0872g")
 [node name="Muzzle" type="Marker2D" parent="Turret" unique_id=203090136]
 position = Vector2(0, -30.976429)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318098511]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1318098511 groups=["jugador"]]
 position = Vector2(7.1525574e-07, 4.7683716e-07)
 scale = Vector2(0.9377772, 0.92180496)
 shape = SubResource("RectangleShape2D_of82t")
