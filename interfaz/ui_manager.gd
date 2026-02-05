@@ -25,7 +25,20 @@ func _ready():
 	
 	# El efecto rojo de daño empieza siendo invisible (Transparencia Alfa a 0)
 	if damage_overlay:
+		# fuerza que ocupe toda la pantalla
+		damage_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		
+		# Ajuste manual por si los anclajes fallan por el nodo padre
+		var screen_size = get_viewport().get_visible_rect().size
+		damage_overlay.size = screen_size
+		damage_overlay.position = Vector2.ZERO
+		
+		# las acciones de disparo no se ven afectadas por el indicardor de daño recibido
+		# evita el bloqueo de los clics del ratón
+		damage_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		# damos visibilidad (la opacidad es 0, pero el nodo debe estar 'show')
 		damage_overlay.modulate.a = 0
+		damage_overlay.show()
 	else:
 		print("ERROR: No se encuentra el nodo DamageOverlay. Revisa el HUD.")
 
@@ -48,16 +61,20 @@ func _ready():
 	actualizar_salud(3)
 	
 func _process(_delta):
-	# Actualizam la posición del icono en el minimapa en cada frame
+	# Actualiza la posición del icono en el minimapa en cada frame
 	actualizar_minimapa()
 
 # --- MÉTODOS DE ACTUALIZACIÓN (Llamados desde player_tank.gd) ---
 
-# Cambia el texto de salud arriba a la derecha
+# Cambia el texto de salud
 func actualizar_salud(puntos: int):
 	salud_actual = puntos
 	if health_label:
-		health_label.text = "SALUD: " + str(puntos)
+		# Uso de icono de corazón en lugar de texto plano
+		var corazones = ""
+		for i in range(puntos):
+			corazones += "♥ "
+		health_label.text = "ESTADO: " + corazones
 	
 	# en caso de quedar con una vida, parpadeo rojo del borde
 	if salud_actual == 1:
@@ -65,10 +82,13 @@ func actualizar_salud(puntos: int):
 	else:
 		detener_parpadeo_critico()
 
-# Actualiza la barra de balas en el centro superior
+# Actualiza la barra de munición en el centro superior
 func actualizar_municion(cantidad: int):
 	if ammo_bar:
-		ammo_bar.value = cantidad
+		# mediante Tween se anima la barra llena/vacía suavemente
+		var tween = create_tween() # crea animaciones nuevas
+		# Anima la propiedad "value" de la barra hasta la cantidad actual en 0.1 segundos
+		tween.tween_property(ammo_bar, "value", cantidad, 0.1)
 
 # Gestiona la barra de calor. Cambia a rojo si el arma se bloquea por 5 segundos
 func actualizar_calor(valor: float, esta_bloqueado: bool):
@@ -76,38 +96,45 @@ func actualizar_calor(valor: float, esta_bloqueado: bool):
 		heat_bar.value = valor
 		# Lógica de cambio de color para ProgressBar (StyleBoxFlat)
 		if heat_bar is ProgressBar:
-			# Duplica el estilo para no cambiar todas las barras del juego a la vez
-			var style_box = heat_bar.get_theme_stylebox("fill").duplicate()
+			# Buscamos el estilo de la parte rellena de la barra
+			var style = heat_bar.get_theme_stylebox("fill")
 			
-			if esta_bloqueado:
-				style_box.bg_color = Color.RED
-			else:
-				# Interpolación: de azul (frío) a naranja (caliente)
-				style_box.bg_color = Color.SKY_BLUE.lerp(Color.ORANGE, valor / 100.0)
-			
-			heat_bar.add_theme_stylebox_override("fill", style_box)
+			# Verifica que el estilo exista para evitar errores de ejecución
+			if style:
+				# Duplica el estilo para que el cambio de color solo afecte a ESTA barra
+				var style_box = style.duplicate()
+				
+				if esta_bloqueado:
+					style_box.bg_color = Color.RED # Rojo brillante si el arma se bloquea
+				else:
+					# Cambia gradualmente de azul (frío) a naranja (caliente) según el valor
+					style_box.bg_color = Color.SKY_BLUE.lerp(Color.ORANGE, valor / 100.0)
+				
+				# Aplica el estilo modificado a la barra
+				heat_bar.add_theme_stylebox_override("fill", style_box)
 
 # Crea el efecto de parpadeo rojo cuando recibimos un impacto
 func mostrar_efecto_daño():
-	if salud_actual == 1: return #asegura que de quedar una vida no se ejecute lo de abajo (estado_critico)
+	if salud_actual <= 1: return #asegura que de quedar una vida no se ejecute lo de abajo (estado_critico)
 	if damage_overlay:
 		# 'Tween': animación por código fluida
 		var tween = create_tween()
-		# 1. Aparece el rojo (opacidad 0.7) rápido en 0.1 seg
-		tween.tween_property(damage_overlay, "modulate:a", 0.7, 0.1)
-		# 2. Desaparece el rojo (opacidad 0.0) en 0.4 seg
-		tween.tween_property(damage_overlay, "modulate:a", 0.0, 0.4)
+		# 1. Aparece el rojo (opacidad 0.6) rápido en 0.1 seg
+		tween.tween_property(damage_overlay, "modulate:a", 0.6, 0.1)
+		# 2. Desaparece el rojo (opacidad 0.0) en 0.3 seg
+		tween.tween_property(damage_overlay, "modulate:a", 0.0, 0.3)
 
 func iniciar_parpadeo_critico():
 	# Si ya hay una animación de crítico funcionando, no creamos otra nueva (evita solapamientos)
 	if tween_critico and tween_critico.is_running(): return 
 	
 	if damage_overlay:
-		# Creamos un bucle infinito (.set_loops) de parpadeo rojo
+		# Crea un bucle infinito (.set_loops) de parpadeo rojo
 		tween_critico = create_tween().set_loops()
-		# Pasa de casi invisible a semi-rojo suavemente usando una curva de seno (SINE)
-		tween_critico.tween_property(damage_overlay, "modulate:a", 0.4, 0.8).set_trans(Tween.TRANS_SINE)
-		tween_critico.tween_property(damage_overlay, "modulate:a", 0.1, 0.8).set_trans(Tween.TRANS_SINE)
+		# Animación tipo "respiración": de casi invisible (0.1) a visible (0.4) de forma cíclica
+		# Cada transición dura 0.8 segundos para dar sensación de pulsación
+		tween_critico.tween_property(damage_overlay, "modulate:a", 0.4, 0.8)
+		tween_critico.tween_property(damage_overlay, "modulate:a", 0.1, 0.8)
 
 func detener_parpadeo_critico():
 	# Si existe el Tween del crítico, lo eliminamos inmediatamente

@@ -20,12 +20,14 @@ extends CharacterBody2D
 @export var overheat_threshold: float = 100.0
 @export var overheat_cool_speed: float = 20.0 # Velocidad de enfriamiento por segundo
 @export var heat_per_shot: float = 25.0 # Calor generado por cada disparo
+@export var ammo_regen_time: float = 1.5 # Segundos para recuperar una bala
 
 # Variables de estado interno
 var current_ammo: int = 10
 var current_heat: float = 0.0
 var is_overheated: bool = false
 var health: int = 3
+var regen_timer: float = 0.0 # Cronómetro interno para la recarga
 
 # Referencia a la interfaz de usuario
 # grupo para encontrar el HUD fácilmente en la escena
@@ -45,6 +47,15 @@ func _ready():
 	add_to_group("jugador")
 	setup_camera_limits()
 	current_ammo = max_ammo # iniciliza la variable cantidad munición al máximo
+	
+	# retraso en la busqueda del HUD, para que lo encuentre. de no estar, le asignaria null de valor
+	await get_tree().process_frame
+	ui = get_tree().get_first_node_in_group("ui")
+	
+	# Inicializamos la UI con los valores reales del tanque
+	if ui:
+		ui.actualizar_salud(health)
+		ui.actualizar_municion(current_ammo)
 
 func setup_camera_limits():
 	if camera:
@@ -73,7 +84,15 @@ func _physics_process(delta: float):
 	
 	# Actualizamos la barra de calor en la UI si existe
 	if ui: ui.actualizar_calor(current_heat, is_overheated)
-		
+
+	# --- SISTEMA DE RECARGA AUTOMÁTICA ---
+	if current_ammo < max_ammo:
+		regen_timer += delta
+		if regen_timer >= ammo_regen_time:
+			current_ammo += 1
+			regen_timer = 0.0 # Reiniciamos el tiempo para la siguiente bala
+			if ui: ui.actualizar_municion(current_ammo)
+
 	# 1. MOVIMIENTO DEL CHASIS
 	# se usan los nombres de las acciones definidas en Project -> Project Settings -> Input Map
 	var rotation_direction = Input.get_axis("izquierda", "derecha")
@@ -108,6 +127,10 @@ func _physics_process(delta: float):
 				print("ARMAS BLOQUEADAS: Sistema sobrecalentado")
 			elif current_ammo <= 0:
 				print("SIN MUNICIÓN: Cargador vacío")
+	
+	# --- TEST DE DAÑO ---
+	if Input.is_action_just_pressed("ui_accept"): # La tecla 'Enter' por defecto
+		recibir_daño()
 
 	# 4. EJECUTAR MOVIMIENTO Y COLISIONES
 	# Esta función utiliza la variable interna 'velocity' para desplazar el cuerpo
@@ -133,9 +156,10 @@ func shoot():
 		bullet.direction = fire_direction
 		bullet.rotation = turret.global_rotation
 		
-		# Gestión de recursos
+		# Gestión de recursos (gastar)
 		current_ammo -= 1 
-		current_heat += heat_per_shot 
+		current_heat += heat_per_shot
+		regen_timer = 0.0 # Interrumpimos la recarga al disparar
 		
 		# bandera que activa el sobrecalentamiento
 		if current_heat >= overheat_threshold:
@@ -154,10 +178,8 @@ func recibir_daño():
 	
 	# Conecta con la UI para mostrar efectos visuales
 	if ui:
-		if ui.has_method("mostrar_efecto_daño"):
-			ui.mostrar_efecto_daño() # Llama al parpadeo rojo
-		if ui.has_method("actualizar_salud"):
-			ui.actualizar_salud(health) # Actualiza el contador de vidas
+		ui.mostrar_efecto_daño() # Llama al parpadeo rojo
+		ui.actualizar_salud(health) # Actualiza el contador de vidas
 	
 	# Si nos quedamos sin vida, reinicia
 	if health <= 0:
