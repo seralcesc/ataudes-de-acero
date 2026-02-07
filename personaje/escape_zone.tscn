@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://uiwtiqb26uc0"]
+
+[ext_resource type="Texture2D" uid="uid://bwllahkje1nuk" path="res://upload.png" id="1_6qmrb"]
+[ext_resource type="Script" uid="uid://dhmvtqc2uplvj" path="res://personaje/escape_zone.gd" id="1_fho0i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fho0i"]
+size = Vector2(665, 85)
+
+[node name="EscapeZone" type="Area2D" unique_id=1921712847 groups=["zona_escape"]]
+script = ExtResource("1_fho0i")
+next_scene = "res://interfaz/victory_screen.tscn"
+metadata/next_scene = "res://interfaz/victory_screen.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1706341027]
+position = Vector2(333.5, 42.5)
+shape = SubResource("RectangleShape2D_fho0i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=579623447]
+position = Vector2(329, 33)
+scale = Vector2(2, 2)
+texture = ExtResource("1_6qmrb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

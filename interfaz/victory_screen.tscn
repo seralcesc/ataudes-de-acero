@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dwapfvbb8wyh0"]
+
+[ext_resource type="Script" uid="uid://ni4aojtvsq3v" path="res://interfaz/victory_screen.gd" id="1_rbj82"]
+
+[node name="VictoryScreen" type="Control" unique_id=1574394102]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rbj82")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1161230516]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.06666667, 0.06666667, 0.5529412)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=806615019]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1184486481]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 120
+text = "¡¡¡VICTORIA!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer" unique_id=1726382706]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 80
+text = "Has completado la misión"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnReintentar" type="Button" parent="VBoxContainer" unique_id=833560932]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 60
+text = "Reintentar"
+
+[node name="BtnMenu" type="Button" parent="VBoxContainer" unique_id=776958032]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 60
+text = "Salir"

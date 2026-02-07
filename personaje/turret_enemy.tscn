@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f3ovxaflulda"]
 
-[ext_resource type="Script" uid="uid://cmkk0mms0s8mm" path="res://turret_enemy.gd" id="1_o2goa"]
+[ext_resource type="Script" uid="uid://cmkk0mms0s8mm" path="res://personaje/turret_enemy.gd" id="1_o2goa"]
 [ext_resource type="Texture2D" uid="uid://bu2gmklmamui3" path="res://tank_bigRed.png" id="2_c8kdk"]
 [ext_resource type="PackedScene" uid="uid://brwfbyt5ry1l3" path="res://personaje/bullet.tscn" id="2_dip3q"]
 

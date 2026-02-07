@@ -103,16 +103,20 @@ func shoot():
 		# aviso en consola si la torreta no está configurada
 		print("AVISO: No se puede disparar (falta Muzzle o Bala)")
 
+
 func recibir_daño():
 	health -= 1
 	
-	# efecto visual: la torreta parpadea en rojo al recibir el impacto
 	var tween = create_tween()
 	modulate = Color.RED
-	# vuelve a su color original (blanco/normal) en 0.1 segundos
 	tween.tween_property(self, "modulate", Color.WHITE, 0.1)
 	
-	# si la vida llega a 0, eliminamos la torreta del juego
 	if health <= 0:
-		print("SISTEMA: Torreta destruida.")
+		remove_from_group("enemigos")
+		
+		var player = get_tree().get_first_node_in_group("jugador")
+		if player:
+			if player.has_method("comprobar_victoria"):
+				player.comprobar_victoria()
+		
 		queue_free()

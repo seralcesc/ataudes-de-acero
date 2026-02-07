@@ -51,8 +51,9 @@ func _ready():
 	add_to_group("jugador")
 	# configura los bordes donde la cámara dejará de seguirnos
 	setup_camera_limits()
-	current_ammo = max_ammo # iniciliza la variable cantidad munición al máximo
-	
+	# iniciliza la variable cantidad munición al máximo
+	current_ammo = max_ammo 
+		
 	# retraso en la busqueda del HUD, para que lo encuentre. de no estar, le asignaria null de valor
 	await get_tree().process_frame
 	ui = get_tree().get_first_node_in_group("ui")
@@ -202,3 +203,52 @@ func recibir_daño():
 		# la UI lo gestiona el reinicio con Y/N
 		set_physics_process(false) # bloquea el tanque
 		print("JUGADOR: Derrotado. Espere...")
+
+# se asegura de que el jugador ha cumplido la misión
+func comprobar_victoria():
+	await get_tree().process_frame
+	
+	var enemigos_restantes = get_tree().get_nodes_in_group("enemigos").size()
+	if enemigos_restantes == 0:
+		print("SISTEMA: ¡Todos los enemigos eliminados! Activando zona...")
+		
+		# MÉTODO 1: Buscar por grupo
+		var zona = get_tree().get_first_node_in_group("zona_escape")
+		
+		# MÉTODO 2: Buscar por nombre directo (BACKUP)
+		if not zona or zona.get_script() == null:
+			print("ADVERTENCIA: Buscando zona por nombre alternativo...")
+			zona = get_tree().current_scene.get_node_or_null("EscapeZone")
+		
+		# MÉTODO 3: Buscar en toda la escena (ÚLTIMA OPCIÓN)
+		if not zona or zona.get_script() == null:
+			print("ADVERTENCIA: Búsqueda exhaustiva...")
+			var todos_nodos = get_tree().current_scene.find_children("EscapeZone", "Area2D", true, false)
+			for nodo in todos_nodos:
+				if nodo.get_script() != null:
+					zona = nodo
+					break
+		
+		if zona and zona.get_script() != null:
+			if zona.has_method("activar_zona"):
+				zona.activar_zona()
+				print("SISTEMA: Zona activada correctamente")
+
+# función para manejar cuando el jugador entra en la zona
+func _on_zona_body_entered(body: Node2D):
+	# si el que entró es el jugador
+	if body == self:  
+
+		# cambia a la escena de victoria
+		var zona = get_tree().get_first_node_in_group("zona_escape")
+		var next_scene = ""
+		
+		# intentar obtener la ruta de la siguiente escena
+		if zona and "next_scene" in zona:
+			next_scene = zona.next_scene
+		
+		if next_scene != "":
+			get_tree().change_scene_to_file(next_scene)
+		else:
+			# Si no hay escena configurada, ir directamente a victoria
+			get_tree().change_scene_to_file("res://scenes/victory.tscn")

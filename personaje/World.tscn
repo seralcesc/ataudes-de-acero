@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://bht5unftmfy6u" path="res://personaje/player_tank.tscn" id="16_gxi2h"]
 [ext_resource type="PackedScene" uid="uid://inf2l6yqskr0" path="res://interfaz/hud.tscn" id="17_h1xlt"]
 [ext_resource type="PackedScene" uid="uid://f3ovxaflulda" path="res://personaje/turret_enemy.tscn" id="18_8mpwi"]
+[ext_resource type="Script" uid="uid://dhmvtqc2uplvj" path="res://personaje/escape_zone.gd" id="19_xfkvf"]
+[ext_resource type="Texture2D" uid="uid://bwllahkje1nuk" path="res://upload.png" id="20_h4efd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_om84d"]
 size = Vector2(1190, 43.5)
@@ -31,7 +33,10 @@ size = Vector2(55, 2005)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xfkvf"]
 size = Vector2(51, 1999)
 
-[node name="Mapa1" type="Node2D" unique_id=683616142]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4jky4"]
+size = Vector2(155.5, 101)
+
+[node name="Mapa1" type="Node2D" unique_id=683616142 groups=["zona_escape"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1322166068]
 texture_repeat = 2
@@ -319,3 +324,16 @@ position = Vector2(664, 437)
 
 [node name="TurretEnemy3" parent="." unique_id=1737263296 instance=ExtResource("18_8mpwi")]
 position = Vector2(105, 545)
+
+[node name="EscapeZone" type="Area2D" parent="." unique_id=709846459]
+script = ExtResource("19_xfkvf")
+next_scene = "res://interfaz/victory_screen.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EscapeZone" unique_id=207063344]
+position = Vector2(384, -913)
+shape = SubResource("RectangleShape2D_4jky4")
+
+[node name="Sprite2D" type="Sprite2D" parent="EscapeZone" unique_id=647404783]
+position = Vector2(383, -912)
+scale = Vector2(2, 2)
+texture = ExtResource("20_h4efd")
