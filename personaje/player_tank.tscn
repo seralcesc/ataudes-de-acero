@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://brwfbyt5ry1l3" path="res://personaje/bullet.tscn" id="2_h50u8"]
 [ext_resource type="Texture2D" uid="uid://bkiootod3wshh" path="res://tankBody_green_outline.png" id="2_of82t"]
 [ext_resource type="Texture2D" uid="uid://pwt1bvsvpyra" path="res://tankGreen_barrel2_outline.png" id="3_0872g"]
+[ext_resource type="AudioStream" uid="uid://c07oauftlkowf" path="res://sonidos/ready.wav" id="5_b260l"]
+[ext_resource type="AudioStream" uid="uid://derf1usn8vpg1" path="res://sonidos/disparo.wav" id="6_b7cf8"]
+[ext_resource type="AudioStream" uid="uid://cthkmfyfykjc1" path="res://sonidos/impacto.wav" id="7_npbm2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_of82t"]
 size = Vector2(87.44082, 80.27729)
@@ -30,3 +33,16 @@ scale = Vector2(0.9377772, 0.92180496)
 shape = SubResource("RectangleShape2D_of82t")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1091746052]
+
+[node name="MotorSound" type="AudioStreamPlayer2D" parent="." unique_id=727790357]
+stream = ExtResource("5_b260l")
+max_distance = 1000.0
+attenuation = 1.5157169
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=1598999443]
+stream = ExtResource("6_b7cf8")
+max_distance = 1500.0
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=1695684903]
+stream = ExtResource("7_npbm2")
+max_distance = 800.0

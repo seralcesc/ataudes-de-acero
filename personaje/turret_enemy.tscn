@@ -3,12 +3,15 @@
 [ext_resource type="Script" uid="uid://cmkk0mms0s8mm" path="res://personaje/turret_enemy.gd" id="1_o2goa"]
 [ext_resource type="Texture2D" uid="uid://bu2gmklmamui3" path="res://tank_bigRed.png" id="2_c8kdk"]
 [ext_resource type="PackedScene" uid="uid://brwfbyt5ry1l3" path="res://personaje/bullet.tscn" id="2_dip3q"]
+[ext_resource type="AudioStream" uid="uid://derf1usn8vpg1" path="res://sonidos/disparo.wav" id="4_jhpvs"]
+[ext_resource type="AudioStream" uid="uid://cthkmfyfykjc1" path="res://sonidos/impacto.wav" id="5_y5b2p"]
+[ext_resource type="AudioStream" uid="uid://bpui5ci3groq7" path="res://sonidos/destruido.wav" id="6_ai3k5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dip3q"]
 size = Vector2(57, 55)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3d478"]
-radius = 354.43
+radius = 391.67
 
 [node name="TurretEnemy" type="StaticBody2D" unique_id=101252854]
 script = ExtResource("1_o2goa")
@@ -34,3 +37,15 @@ shape = SubResource("CircleShape2D_3d478")
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=1051038629]
 wait_time = 1.5
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="." unique_id=672256506]
+stream = ExtResource("4_jhpvs")
+max_distance = 1200.0
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=337897728]
+stream = ExtResource("5_y5b2p")
+max_distance = 800.0
+
+[node name="DestroyedSound" type="AudioStreamPlayer2D" parent="." unique_id=1087481688]
+stream = ExtResource("6_ai3k5")
+max_distance = 1500.0

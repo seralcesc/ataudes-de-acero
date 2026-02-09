@@ -8,6 +8,11 @@ extends StaticBody2D
 @export var fire_rate: float = 1.5
 @export var bullet_speed: float = 250.0 
 
+# --- REFERENCIAS DE AUDIO ---
+@onready var shoot_sound = $ShootSound
+@onready var hit_sound = $HitSound
+@onready var destroyed_sound = $DestroyedSound
+
 # --- REFERENCIAS ---
 # usa nombres genéricos y comprueba el _ready
 var muzzle = null
@@ -79,6 +84,9 @@ func _on_shoot_timer_timeout():
 func shoot():
 	# comprueba que hay una bala configurada y un punto de salida (muzzle)
 	if bullet_scene and muzzle:
+		# reproduce el sonido
+		if shoot_sound:
+			shoot_sound.play()
 		# instancia el proyectil
 		var bullet = bullet_scene.instantiate()
 		# lo añade a la escena principal para que sea independiente de la torreta
@@ -107,11 +115,19 @@ func shoot():
 func recibir_daño():
 	health -= 1
 	
+	# reproduce el sonido de impacto
+	if hit_sound and health > 0:
+		hit_sound.play()
+	
 	var tween = create_tween()
 	modulate = Color.RED
 	tween.tween_property(self, "modulate", Color.WHITE, 0.1)
 	
 	if health <= 0:
+		# reproduce el sonido de destruído
+		if destroyed_sound:
+			destroyed_sound.play()
+
 		remove_from_group("enemigos")
 		
 		var player = get_tree().get_first_node_in_group("jugador")

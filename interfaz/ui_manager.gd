@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var health_label = $Control/StatusContainer/HealthLabel
 @onready var damage_overlay = $Control/DamageOverlay
 @onready var minimap_player_icon = $Control/Minimap/PlayerIcon
+@onready var radio_sound = $RadioSound
 
 # --- ELEMENTOS PARA LA CUENTA ATRÁS ---
 @onready var start_overlay = $StartOverlay # pantalla de inicio
@@ -82,6 +83,11 @@ func _setup_ui_initial_state():
 func iniciar_secuencia_entrada():
 	# bloquea el movimiento del tanque mientras carga la pantalla
 	get_tree().call_group("jugador", "set_physics_process", false)
+	
+	# reproduce el sonido
+	if radio_sound:
+		radio_sound.play()
+	
 	if start_label:
 		start_label.text = "READY?"
 	await get_tree().create_timer(1.2).timeout

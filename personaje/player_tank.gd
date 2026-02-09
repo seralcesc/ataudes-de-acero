@@ -8,6 +8,11 @@ extends CharacterBody2D
 # suavidad del giro de la torreta
 @export var turret_speed: float = 10.0
 
+# --- REFERENCIAS DE AUDIO ---
+@onready var engine_sound = $EngineSound
+@onready var shoot_sound = $ShootSound
+@onready var hit_sound = $HitSound
+
 # --- LÍMITES DEL MAPA ---
 # definen las coordenadas máximas donde se moverá la cámara y el tanque
 @export var map_limit_left: int = -186
@@ -81,7 +86,7 @@ func setup_camera_limits():
 		
 # este bloque se actualizará 60 veces por segundo (frames) para mandar información actualizada constantementee
 func _physics_process(delta: float):	
-	# --- GESTIÓN DE CALOR Y ENFRIAMIENTO ---	
+	# GESTIÓN DE CALOR Y ENFRIAMIENTO ---	
 	if current_heat > 0:
 		# resta calor progresivamente usando 'delta' para que sea independiente de los FPS
 		current_heat -= overheat_cool_speed * delta 
@@ -95,7 +100,7 @@ func _physics_process(delta: float):
 	# actualiza la barra de calor en la UI si existe
 	if ui: ui.actualizar_calor(current_heat, is_overheated)
 
-	# --- SISTEMA DE RECARGA AUTOMÁTICA ---
+	# SISTEMA DE RECARGA AUTOMÁTICA ---
 	# si falta munición, acumula tiempo hasta llegar al intervalo de regeneración
 	if current_ammo < max_ammo:
 		regen_timer += delta
@@ -105,7 +110,7 @@ func _physics_process(delta: float):
 			# Refrescamos el número de balas en pantalla
 			if ui: ui.actualizar_municion(current_ammo)
 
-	# 1. MOVIMIENTO DEL CHASIS
+	# MOVIMIENTO DEL CHASIS ---
 	# se usan los nombres de las acciones definidas en Project -> Project Settings -> Input Map
 	var rotation_direction = Input.get_axis("izquierda", "derecha")
 	var move_direction = Input.get_axis("retroceder", "avanzar")
@@ -117,7 +122,18 @@ func _physics_process(delta: float):
 	# Vector2.UP (0, -1) apunta hacia adelante en la mayoría de los sprites
 	velocity = Vector2.UP.rotated(rotation) * move_direction * speed
 
-	# 2. MOVIMIENTO DE LA TORRETA (Apuntar al ratón)
+	# SONIDO DEL MOTOR ---
+	if engine_sound:
+		# Si el jugador está presionando alguna tecla de movimiento
+		if move_direction != 0 or rotation_direction != 0:
+			if not engine_sound.playing:
+				engine_sound.play()
+		else:
+			# Detener gradualmente el sonido
+			if engine_sound.playing:
+				engine_sound.stop()
+
+	# MOVIMIENTO DE LA TORRETA (Apuntar al ratón) ---
 	var mouse_pos = get_global_mouse_position()
 	# calcula el ángulo matemático desde el tanque hacia el ratón
 	var angle_to_mouse = (mouse_pos - global_position).angle()
@@ -128,7 +144,7 @@ func _physics_process(delta: float):
 	# rotación suavizada de la torreta
 	turret.global_rotation = lerp_angle(turret.global_rotation, final_angle, turret_speed * delta)
 
-	# 3. CONTROL DE DISPARO
+	# CONTROL DE DISPARO ---
 	# "disparar" debe estar configurado en el Input Map
 	if Input.is_action_just_pressed("disparar"):
 		# solo dispara si se cumplen las dos condiciones de seguridad
@@ -146,13 +162,16 @@ func _physics_process(delta: float):
 	if Input.is_action_just_pressed("ui_accept"): # La tecla 'Enter' por defecto
 		recibir_daño()
 
-	# 4. EJECUTAR MOVIMIENTO Y COLISIONES
+	# EJECUTAR MOVIMIENTO Y COLISIONES ---
 	# esta función utiliza la variable interna 'velocity' para desplazar el cuerpo
 	move_and_slide()
 
 func shoot():
 	# Verificamos que la escena de la bala esté cargada en el Inspector para evitar cierres inesperados
 	if bullet_scene and muzzle:
+		# reproduce el sonido
+		if shoot_sound:
+			shoot_sound.play()
 		# instancia del proyectil
 		var bullet = bullet_scene.instantiate()
 		# establece la posición global de la punta del cañón
@@ -190,6 +209,10 @@ func recibir_daño():
 	health -= 1
 	# evita que la salud baje de 0
 	health = max(0, health)
+	
+	# reproduce sonido de impacto
+	if hit_sound:
+		hit_sound.play()
 	
 	# si la UI está disponible, llamamos a sus métodos de actualización visual
 	if ui:

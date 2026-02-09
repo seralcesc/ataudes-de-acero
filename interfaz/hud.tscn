@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://inf2l6yqskr0"]
 
 [ext_resource type="Script" uid="uid://d1dueoykuhgby" path="res://interfaz/ui_manager.gd" id="1_xt8yb"]
+[ext_resource type="AudioStream" uid="uid://c07oauftlkowf" path="res://sonidos/ready.wav" id="2_a8o4r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8o4r"]
 bg_color = Color(0.54571843, 0.5061734, 0.01017022, 1)
@@ -166,3 +167,6 @@ RETRY?
 (Y/N)"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RadioSound" type="AudioStreamPlayer" parent="." unique_id=1807440008]
+stream = ExtResource("2_a8o4r")
